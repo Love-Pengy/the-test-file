@@ -1,7 +1,7 @@
-#include <stdarg.h>
-#include <locale.h>
 #include <execinfo.h>
+#include <locale.h>
 #include <pthread.h>
+#include <stdarg.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -9,87 +9,114 @@
 #include <string.h>
 #include <uchar.h>
 #include <unistd.h>
-#define LOG(s, data...) argFunc("%s (%d): %s", __FILE__, __LINE__, s, ##data)   
-void argFunc(char *formatString, ...) {
-  va_list list;
-  int d;
-  char c;
-  /*char *s;*/
-  /*long l;*/
-  /*long long ll;*/
-  /*float f; */
-  va_start(list, formatString);
-  char test;
-  char buff[8192];
-  vsnprintf(buff, 8192, formatString, list);
-  /*printf("WRITTEN: %d\n",d); */
-  printf("%s\n", buff);
-  /*printf("%p\n", __builtin_return_address(0));*/
-  va_end(list);
-}
-char *extractUnicode(const char *input) {
-  char *buff = malloc(sizeof(char) * (strlen(input) + 1));
-  buff[0] = '\0';
-  char *test = malloc(sizeof(char) * (strlen(input) + 2));
-  test[0] = '\0';
-  strncpy(test, input, strlen(input) + 1);
-  char32_t specChar;
-  mbstate_t mbs;
-  char *locale = setlocale(LC_ALL, "");
+/*int something = 10;*/
+/*#define TESTMACRO(ARG) ARG*/
+/*#define LOG(s, data...) argFunc("%s (%d): %s", __FILE__, __LINE__, s,
+ * ##data)*/
+/*void argFunc(char *formatString, ...) {*/
+/*  va_list list;*/
+/*  int d;*/
+/*  char c;*/
+/*char *s;*/
+/*long l;*/
+/*  long long ll;*/
+/*  float f; */
+/*  va_start(list, formatString);*/
+/*  char test;*/
+/*  char buff[8192];*/
+/*  vsnprintf(buff, 8192, formatString, list);*/
+/*  printf("WRITTEN: %d\n",d);  */
+    /*  printf("%s\n", buff);*/
+    /*  printf("%p\n", __builtin_return_address(0)); */
+    /*  va_end(list);*/
+    /*}*/
+    /*char *extractUnicode(const char *input) {*/
+    /*  char *buff = malloc(sizeof(char) * (strlen(input) + 1));*/
+    /*  buff[0] = '\0';*/
+    /*  char *test = malloc(sizeof(char) * (strlen(input) + 2));*/
+    /*  test[0] = '\0';*/
+    /*  strncpy(test, input, strlen(input) + 1);*/
+    /*  char32_t specChar;*/
+    /*  mbstate_t mbs;*/
+    /*  char *locale = setlocale(LC_ALL, "");*/
+    /**/
+    /*  if (!locale) {*/
+    /*    free(buff);*/
+    /*    return (NULL);*/
+    /*  }*/
+    /*  memset(&mbs, 0, sizeof(mbs));*/
+    /**/
+    /*  size_t size = mbrtoc32(&specChar, test, 16, &mbs);*/
+    /*  if (size == (size_t)-1 || size == (size_t)-2) {*/
+    /*    return (NULL);*/
+    /*  }*/
+    /*  int cpy = c32rtomb(buff, specChar, &mbs);*/
+    /*  if (cpy < 0) {*/
+    /*    return (NULL);*/
+    /*  }*/
+    /*  free(test);*/
+    /*  return (buff);*/
+    /*}*/
+    /**/
+    /*void test(char **input) {*/
+    /*  free(*input);*/
+    /*  *input = malloc(sizeof(char) * (strlen("test") + 1));*/
+    /*  strcpy(*input, "test");*/
+    /*}*/
+    /**/
+    /*void *aFunc(void *a) {*/
+    /*  int *aVal = (int *)a;*/
+    /*  while (1) {*/
+    /*    (*aVal)++;*/
+    /*    printf("A: %d\n", *aVal);*/
+    /*    sleep(1);*/
+    /*  }*/
+    /*  return (NULL);*/
+    /*}*/
+    /**/
+    /*void *bFunc(int *b) {*/
+    /*  while (1) {*/
+    /*    (*b)++;*/
+    /*    printf("B: %d\n", *b);*/
+    /*    sleep(1);*/
+    /*  }*/
+    /*  return (NULL);*/
+    /*}*/
+    /**/
+    /*#define MAP(name) (SPEC_##name)*/
+    /*#define SPEC_TEST 0x1*/
+    /*#define MAPPING (MAP(TEST))*/
+    /**/
+    /*union test {*/
+    /*  char *string;*/
+    /*  int intyWinty;*/
+    /*};*/
+    /**/
+    /*char *foo(void) { return ("%d\n", 1); }*/
+    /**/
+    /*static int qsortCompare(const void *int1, const void *int2) {*/
+    /*  return (*(int *)int1 - *(int *)int2);*/
+    /*}*/
+    /**/
+    /**/
+    /*int* twoSum(int* nums, int numsSize, int target) {*/
+    /*  int* answer = malloc(sizeof(int) * 2);*/
+    /*  for(int i = 0; i < numsSize; i++){*/
+    /*    for(int j = 0; j < numsSize; j++){*/
+    /*      if(j == i){*/
+    /*        continue;*/
+    /*      }*/
+    /*      if(nums[i] + nums[j] == target){*/
+    /*        answer[0] = i;*/
+    /*        answer[1] = j;*/
+    /*        return(answer);*/
+    /*      }*/
+    /*    }*/
+    /*  }  */
+    /*  return(NULL);*/
+    /*}*/
 
-  if (!locale) {
-    free(buff);
-    return (NULL);
-  }
-  memset(&mbs, 0, sizeof(mbs));
-
-  size_t size = mbrtoc32(&specChar, test, 16, &mbs);
-  if (size == (size_t)-1 || size == (size_t)-2) {
-    return (NULL);
-  }
-  int cpy = c32rtomb(buff, specChar, &mbs);
-  if (cpy < 0) {
-    return (NULL);
-  }
-  free(test);
-  return (buff);
-}
-
-void test(char **input) {
-  free(*input);
-  *input = malloc(sizeof(char) * (strlen("test") + 1));
-  strcpy(*input, "test");
-}
-
-void *aFunc(void *a) {
-  int *aVal = (int *)a;
-  while (1) {
-    (*aVal)++;
-    printf("A: %d\n", *aVal);
-    sleep(1);
-  }
-  return (NULL);
-}
-
-void *bFunc(int *b) {
-  while (1) {
-    (*b)++;
-    printf("B: %d\n", *b);
-    sleep(1);
-  }
-  return (NULL);
-}
-
-#define MAP(name) (SPEC_##name)
-#define SPEC_TEST 0x1
-#define MAPPING (MAP(TEST))
-
-union test {
-  char *string;
-  int intyWinty;
-};
-
-int main(void) {
+    int main(void) {
   /*int a = 10;*/
   /*int b = 11;*/
   /*printf("a: %d, b: %d\n", a, b);*/
@@ -184,5 +211,60 @@ printf("CAN YOU GO PAST THIS?\n");
   /*          printf("DIDN'T WORK\n");*/
   /*  }*/
   //---------------------------------------
-  LOG("%c|%d\n", 'l', 10);
+  // LOG("%c|%d\n", 'l', 10);
+  //----------------------------
+  // printf("%s", foo());
+  //------------------------------------
+  // printf("%d\n", 0X00C);
+  //------------------------------------
+  /*
+  struct test{
+    int something;
+    int random[];
+  };
+
+  struct test* arr = malloc(sizeof(struct test));
+  arr->something = 1;
+  arr->random[0] = 0;
+  printf("%d\n", sizeof(arr->random)/sizeof(int));
+  */
+  //------------------------------------
+  /*
+  int arr[] = {0, 10, 4, 6};
+  qsort(arr, sizeof(arr)/sizeof(arr[0]), sizeof(*arr), qsortCompare);
+  for(int i = 0; i < 4; i++){
+    printf("%d \n", arr[i]);
+  }
+  */
+  //------------------------------------
+  // printf("%d\n", strcmp("ac", "bb"));
+  //------------------------------------
+  //------------------------------------
+  // printf("%d\n", TESTMACRO(something));
+  // int test[TESTMACRO(something)];
+  //------------------------------------
+  /*int arr[] = {1, 2, 3, 4};*/
+  /*printf("OG: ");*/
+  /*for (int i = 0; i < sizeof(arr) / sizeof(arr[0]); i++) {*/
+  /*  printf("%d ", arr[i]);*/
+  /*}*/
+  /*printf("\n");*/
+  /*arr[0] <<= 1;*/
+  /*printf("NEW: ");*/
+  /*for (int i = 0; i < sizeof(arr) / sizeof(arr[0]); i++) {*/
+  /*  printf("%d ", arr[i]);*/
+  /*}*/
+  //-----------------------------------------------
+  /*int something[] = {3, 2, 4};*/
+  /*int* output = twoSum(something, 3, 6);*/
+  /*for(int i = 0; i < 2; i++){*/
+  /*  printf("%d ", output[i]);*/
+  /*}*/
+  //----------------------------------------
+  // printf("%d\n", strcmp("Idon'tknow", "donknwoI't"));
+  //----------------------------------------
+  /*do {*/
+  /*  ;*/
+  /*} while (1);*/
+  //---------------------
 }
