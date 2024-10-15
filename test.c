@@ -30,34 +30,33 @@
     /*  printf("%p\n", __builtin_return_address(0)); */
     /*  va_end(list);*/
     /*}*/
-    /*char *extractUnicode(const char *input) {*/
-    /*  char *buff = malloc(sizeof(char) * (strlen(input) + 1));*/
-    /*  buff[0] = '\0';*/
-    /*  char *test = malloc(sizeof(char) * (strlen(input) + 2));*/
-    /*  test[0] = '\0';*/
-    /*  strncpy(test, input, strlen(input) + 1);*/
-    /*  char32_t specChar;*/
-    /*  mbstate_t mbs;*/
-    /*  char *locale = setlocale(LC_ALL, "");*/
-    /**/
-    /*  if (!locale) {*/
-    /*    free(buff);*/
-    /*    return (NULL);*/
-    /*  }*/
-    /*  memset(&mbs, 0, sizeof(mbs));*/
-    /**/
-    /*  size_t size = mbrtoc32(&specChar, test, 16, &mbs);*/
-    /*  if (size == (size_t)-1 || size == (size_t)-2) {*/
-    /*    return (NULL);*/
-    /*  }*/
-    /*  int cpy = c32rtomb(buff, specChar, &mbs);*/
-    /*  if (cpy < 0) {*/
-    /*    return (NULL);*/
-    /*  }*/
-    /*  free(test);*/
-    /*  return (buff);*/
-    /*}*/
-    /**/
+    char *extractUnicode(const char *input) {
+      char *buff = malloc(sizeof(char) * (strlen(input) + 1));
+      buff[0] = '\0';
+      char *test = malloc(sizeof(char) * (strlen(input) + 2));
+      test[0] = '\0';
+      strncpy(test, input, strlen(input) + 1);
+      char32_t specChar;
+      mbstate_t mbs;
+      char *locale = setlocale(LC_ALL, "");
+    
+      if (!locale) {
+        free(buff);
+        return (NULL);
+      }
+      memset(&mbs, 0, sizeof(mbs));
+    
+      size_t size = mbrtoc32(&specChar, test, 16, &mbs);
+      if (size == (size_t)-1 || size == (size_t)-2) {
+        return (NULL);
+      }
+      int cpy = c32rtomb(buff, specChar, &mbs);
+      if (cpy < 0) {
+        return (NULL);
+      }
+      free(test);
+      return (buff);
+    }
     /*void test(char **input) {*/
     /*  free(*input);*/
     /*  *input = malloc(sizeof(char) * (strlen("test") + 1));*/
@@ -267,4 +266,14 @@ printf("CAN YOU GO PAST THIS?\n");
   /*  ;*/
   /*} while (1);*/
   //---------------------
+  //printf("%d\n", extractUnicode("") == NULL);
+  //---------------------
+  //printf("%ld\n", sizeof(char*));
+  //---------------------
+  char arr[10][10] = {};   
+  for (int i = 0; i < 3; i++) 
+  {
+    printf("%s\n", arr[i]);
+  }
+  //----------------------
 }
