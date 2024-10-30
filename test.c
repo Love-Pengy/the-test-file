@@ -9,6 +9,29 @@
 #include <string.h>
 #include <uchar.h>
 #include <unistd.h>
+
+#define MAX_OVERLOAD 4
+
+#define INSERTION_FILL INSERTION_FILL_CALC(' ', MAX_OVERLOAD)
+
+#define INSERTION_FILL_CALC(character, size)                                   \
+  ({                                                                           \
+    char value[(size) + 1];                                                    \
+    for (int i = 0; i < (size); i++) {                                         \
+      value[i] = (character);                                                  \
+    }                                                                          \
+    value;                                                                     \
+  })
+
+#define INSERTION_SPACE_FILLER INSERTION_FILL_CALC(" ", MAX_OVERLOAD + 2)
+
+void randFunc(void) {
+  printf("something\n");
+  printf("something\n");
+  printf("something\n");
+  printf("something\n");
+  printf("something\n");
+}
 /*int something = 10;*/
 /*#define TESTMACRO(ARG) ARG*/
 /*#define LOG(s, data...) argFunc("%s (%d): %s", __FILE__, __LINE__, s,
@@ -26,96 +49,96 @@
 /*  char buff[8192];*/
 /*  vsnprintf(buff, 8192, formatString, list);*/
 /*  printf("WRITTEN: %d\n",d);  */
-    /*  printf("%s\n", buff);*/
-    /*  printf("%p\n", __builtin_return_address(0)); */
-    /*  va_end(list);*/
-    /*}*/
-    char *extractUnicode(const char *input) {
-      char *buff = malloc(sizeof(char) * (strlen(input) + 1));
-      buff[0] = '\0';
-      char *test = malloc(sizeof(char) * (strlen(input) + 2));
-      test[0] = '\0';
-      strncpy(test, input, strlen(input) + 1);
-      char32_t specChar;
-      mbstate_t mbs;
-      char *locale = setlocale(LC_ALL, "");
-    
-      if (!locale) {
-        free(buff);
-        return (NULL);
-      }
-      memset(&mbs, 0, sizeof(mbs));
-    
-      size_t size = mbrtoc32(&specChar, test, 16, &mbs);
-      if (size == (size_t)-1 || size == (size_t)-2) {
-        return (NULL);
-      }
-      int cpy = c32rtomb(buff, specChar, &mbs);
-      if (cpy < 0) {
-        return (NULL);
-      }
-      free(test);
-      return (buff);
-    }
-    /*void test(char **input) {*/
-    /*  free(*input);*/
-    /*  *input = malloc(sizeof(char) * (strlen("test") + 1));*/
-    /*  strcpy(*input, "test");*/
-    /*}*/
-    /**/
-    /*void *aFunc(void *a) {*/
-    /*  int *aVal = (int *)a;*/
-    /*  while (1) {*/
-    /*    (*aVal)++;*/
-    /*    printf("A: %d\n", *aVal);*/
-    /*    sleep(1);*/
-    /*  }*/
-    /*  return (NULL);*/
-    /*}*/
-    /**/
-    /*void *bFunc(int *b) {*/
-    /*  while (1) {*/
-    /*    (*b)++;*/
-    /*    printf("B: %d\n", *b);*/
-    /*    sleep(1);*/
-    /*  }*/
-    /*  return (NULL);*/
-    /*}*/
-    /**/
-    /*#define MAP(name) (SPEC_##name)*/
-    /*#define SPEC_TEST 0x1*/
-    /*#define MAPPING (MAP(TEST))*/
-    /**/
-    /*union test {*/
-    /*  char *string;*/
-    /*  int intyWinty;*/
-    /*};*/
-    /**/
-    /*char *foo(void) { return ("%d\n", 1); }*/
-    /**/
-    /*static int qsortCompare(const void *int1, const void *int2) {*/
-    /*  return (*(int *)int1 - *(int *)int2);*/
-    /*}*/
-    /**/
-    /**/
-    /*int* twoSum(int* nums, int numsSize, int target) {*/
-    /*  int* answer = malloc(sizeof(int) * 2);*/
-    /*  for(int i = 0; i < numsSize; i++){*/
-    /*    for(int j = 0; j < numsSize; j++){*/
-    /*      if(j == i){*/
-    /*        continue;*/
-    /*      }*/
-    /*      if(nums[i] + nums[j] == target){*/
-    /*        answer[0] = i;*/
-    /*        answer[1] = j;*/
-    /*        return(answer);*/
-    /*      }*/
-    /*    }*/
-    /*  }  */
-    /*  return(NULL);*/
-    /*}*/
+/*  printf("%s\n", buff);*/
+/*  printf("%p\n", __builtin_return_address(0)); */
+/*  va_end(list);*/
+/*}*/
+char *extractUnicode(const char *input) {
+  char *buff = malloc(sizeof(char) * (strlen(input) + 1));
+  buff[0] = '\0';
+  char *test = malloc(sizeof(char) * (strlen(input) + 2));
+  test[0] = '\0';
+  strncpy(test, input, strlen(input) + 1);
+  char32_t specChar;
+  mbstate_t mbs;
+  char *locale = setlocale(LC_ALL, "");
 
-    int main(void) {
+  if (!locale) {
+    free(buff);
+    return (NULL);
+  }
+  memset(&mbs, 0, sizeof(mbs));
+
+  size_t size = mbrtoc32(&specChar, test, 16, &mbs);
+  if (size == (size_t)-1 || size == (size_t)-2) {
+    return (NULL);
+  }
+  int cpy = c32rtomb(buff, specChar, &mbs);
+  if (cpy < 0) {
+    return (NULL);
+  }
+  free(test);
+  return (buff);
+}
+/*void test(char **input) {*/
+/*  free(*input);*/
+/*  *input = malloc(sizeof(char) * (strlen("test") + 1));*/
+/*  strcpy(*input, "test");*/
+/*}*/
+/**/
+/*void *aFunc(void *a) {*/
+/*  int *aVal = (int *)a;*/
+/*  while (1) {*/
+/*    (*aVal)++;*/
+/*    printf("A: %d\n", *aVal);*/
+/*    sleep(1);*/
+/*  }*/
+/*  return (NULL);*/
+/*}*/
+/**/
+/*void *bFunc(int *b) {*/
+/*  while (1) {*/
+/*    (*b)++;*/
+/*    printf("B: %d\n", *b);*/
+/*    sleep(1);*/
+/*  }*/
+/*  return (NULL);*/
+/*}*/
+/**/
+/*#define MAP(name) (SPEC_##name)*/
+/*#define SPEC_TEST 0x1*/
+/*#define MAPPING (MAP(TEST))*/
+/**/
+/*union test {*/
+/*  char *string;*/
+/*  int intyWinty;*/
+/*};*/
+/**/
+/*char *foo(void) { return ("%d\n", 1); }*/
+/**/
+/*static int qsortCompare(const void *int1, const void *int2) {*/
+/*  return (*(int *)int1 - *(int *)int2);*/
+/*}*/
+/**/
+/**/
+/*int* twoSum(int* nums, int numsSize, int target) {*/
+/*  int* answer = malloc(sizeof(int) * 2);*/
+/*  for(int i = 0; i < numsSize; i++){*/
+/*    for(int j = 0; j < numsSize; j++){*/
+/*      if(j == i){*/
+/*        continue;*/
+/*      }*/
+/*      if(nums[i] + nums[j] == target){*/
+/*        answer[0] = i;*/
+/*        answer[1] = j;*/
+/*        return(answer);*/
+/*      }*/
+/*    }*/
+/*  }  */
+/*  return(NULL);*/
+/*}*/
+
+int main(void) {
   /*int a = 10;*/
   /*int b = 11;*/
   /*printf("a: %d, b: %d\n", a, b);*/
@@ -152,8 +175,8 @@ c32rtomb(buff, specChar, &mbs);
 
 printf("%s\n", buff);
   */
-  /*const char* test = "󰆍";*/
-  /*printf("%s\n", extractUnicode(test));*/
+  const char *test = "󰆍";
+  printf("%ld\n", strlen(extractUnicode(test)));
   /*printf("%ld\n", sizeof(char32_t));*/
   /*char* testString = malloc(sizeof(char) * 100);*/
   /*testString[0] = '\0';*/
@@ -266,14 +289,19 @@ printf("CAN YOU GO PAST THIS?\n");
   /*  ;*/
   /*} while (1);*/
   //---------------------
-  //printf("%d\n", extractUnicode("") == NULL);
+  // printf("%d\n", extractUnicode("") == NULL);
   //---------------------
-  //printf("%ld\n", sizeof(char*));
+  // printf("%ld\n", sizeof(char*));
   //---------------------
-  char arr[10][10] = {};   
-  for (int i = 0; i < 3; i++) 
+  /*
+  char arr[10][10] = {};
+  for (int i = 0; i < 3; i++)
   {
     printf("%s\n", arr[i]);
   }
+  */
   //----------------------
+  // randFunc();
+  //------------------------
+  printf("|%s|\n", INSERTION_FILL);
 }
