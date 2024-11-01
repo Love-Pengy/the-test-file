@@ -10,20 +10,29 @@
 #include <uchar.h>
 #include <unistd.h>
 
-#define MAX_OVERLOAD 4
+#define MAX_OVERLOAD 5 
 
-#define INSERTION_FILL INSERTION_FILL_CALC(' ', MAX_OVERLOAD)
+#define SPACE_FILLER2(size) (size) < 1 ? "" : " " (SPACE_FILLER2(((size) - 1)));
+  
+#define INSERTION_FILL2 SPACE_FILLER2(MAX_OVERLOAD)
 
-#define INSERTION_FILL_CALC(character, size)                                   \
-  ({                                                                           \
-    char value[(size) + 1];                                                    \
-    for (int i = 0; i < (size); i++) {                                         \
-      value[i] = (character);                                                  \
-    }                                                                          \
-    value;                                                                     \
-  })
+#define SPACE_FILLER(size) (size == 0) ? "" : " " SPACE_FILLER(size - 1)
 
-#define INSERTION_SPACE_FILLER INSERTION_FILL_CALC(" ", MAX_OVERLOAD + 2)
+
+//top level -> insertion_fill -> calc 
+
+#define INSERTION_CALC(size) EVAL(size)  
+
+#define EVAL(size) SPACES_## size 
+
+#define INSERTION_FILLER INSERTION_CALC(MAX_OVERLOAD)
+
+
+#define SPACES_1 " " 
+#define SPACES_2 "  " 
+#define SPACES_3 "   " 
+#define SPACES_4 "    " 
+#define SPACES_5 "     " 
 
 void randFunc(void) {
   printf("something\n");
@@ -175,8 +184,10 @@ c32rtomb(buff, specChar, &mbs);
 
 printf("%s\n", buff);
   */
+  /*
   const char *test = "󰆍";
   printf("%ld\n", strlen(extractUnicode(test)));
+  */
   /*printf("%ld\n", sizeof(char32_t));*/
   /*char* testString = malloc(sizeof(char) * 100);*/
   /*testString[0] = '\0';*/
@@ -303,5 +314,12 @@ printf("CAN YOU GO PAST THIS?\n");
   //----------------------
   // randFunc();
   //------------------------
-  printf("|%s|\n", INSERTION_FILL);
+  // printf("|%s|\n", INSERTION_FILL);
+  //-----------------------
+  // printf("|%s|\n", TEST);
+  //----------------------
+  //const char* ans = INSERTION_FILL2;
+  //printf("|%s|\n", ans);
+  //-----------------------
+  printf("|%s| -> %ld\n", INSERTION_FILLER, strlen(INSERTION_FILLER));
 }
