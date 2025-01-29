@@ -10,13 +10,17 @@
 #include <uchar.h>
 #include <unistd.h>
 
-#define MAX_OVERLOAD 5 
+#define MAX_OVERLOAD 4 
 
+#define FULL_INSERTION MAX_OVERLOAD - 1 
+
+/*
 #define SPACE_FILLER2(size) (size) < 1 ? "" : " " (SPACE_FILLER2(((size) - 1)));
   
 #define INSERTION_FILL2 SPACE_FILLER2(MAX_OVERLOAD)
 
 #define SPACE_FILLER(size) (size == 0) ? "" : " " SPACE_FILLER(size - 1)
+*/
 
 
 //top level -> insertion_fill -> calc 
@@ -25,14 +29,18 @@
 
 #define EVAL(size) SPACES_## size 
 
-#define INSERTION_FILLER INSERTION_CALC(MAX_OVERLOAD)
+#define INSERTION_FILLER INSERTION_CALC(FULL_INSERTION)
 
+//#define SUM2_MACRO(OPER) (OPER + 2)
 
 #define SPACES_1 " " 
 #define SPACES_2 "  " 
 #define SPACES_3 "   " 
 #define SPACES_4 "    " 
 #define SPACES_5 "     " 
+#define SPACES_6 "      " 
+#define SPACES_7 "       " 
+#define SPACES_8 "        " 
 
 void randFunc(void) {
   printf("something\n");
@@ -321,5 +329,13 @@ printf("CAN YOU GO PAST THIS?\n");
   //const char* ans = INSERTION_FILL2;
   //printf("|%s|\n", ans);
   //-----------------------
+  /*
   printf("|%s| -> %ld\n", INSERTION_FILLER, strlen(INSERTION_FILLER));
+  printf("%d\n", FULL_INSERTION);
+  */
+  /*printf("|%s|\n", INSERTION_CALC(FULL_INSERTION)); */
+  uint8_t test = 0b11001100;
+  test >>= 2; 
+  printf("OG: %d NEW: %d\n",0b11001100, test); 
+  
 }
